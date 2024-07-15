@@ -10,6 +10,11 @@ import PrivateRoute from './components/PrivateRoute';
 import axios from 'axios';
 
 function App() {
+  // Clear localStorage on application start
+  useEffect(() => {
+    localStorage.removeItem('jwt_token');
+  }, []);
+
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('jwt_token'));
 
   useEffect(() => {
