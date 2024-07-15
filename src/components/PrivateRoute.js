@@ -1,13 +1,9 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = () => {
-  // Temporarily bypass authentication check
-  // const isAuthenticated = true; // Always allow access for testing
-  const isAuthenticated = !!localStorage.getItem('token');
-  
-
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+const PrivateRoute = ({ children }) => {
+  const isAuthenticated = !!localStorage.getItem('jwt_token');
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

@@ -1,38 +1,44 @@
 import React, { useState } from 'react';
-import axios from '../api/axiosConfig';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    axios.post('/login', { username, password })
-      .then(response => {
-        console.log('Logged in successfully:', response.data);
-        localStorage.setItem('token', response.data.token); // Store JWT token
-        setError(null);
-        // Redirect to protected route or home page
-      })
-      .catch(error => {
-        console.error('There was an error logging in!', error);
-        setError('Invalid credentials');
-      });
+    try {
+      console.log('Sending login request...');
+      const response = await axios.post('/auth/login', { username, password });
+      console.log('Login response:', response);
+      localStorage.setItem('jwt_token', response.data.token);
+      setIsAuthenticated(true);
+      navigate('/'); // Redirect to the homepage after successful login
+    } catch (error) {
+      console.error('Login failed', error);
+      alert('Login failed. Please check your credentials and try again.');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username:</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </div>
-      <div>
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </div>
+    <form onSubmit={handleLogin}>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
       <button type="submit">Login</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };
