@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from '../api/axiosConfig';
 import MovieList from './MovieList';
 import AddMovieForm from './AddMovieForm';
+import { Box, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 
 const MovieListManager = () => {
   const [movieLists, setMovieLists] = useState([]);
@@ -59,21 +60,24 @@ const MovieListManager = () => {
   };
 
   return (
-    <div>
-      <h2>Movie List Manager</h2>
-      <select onChange={(e) => setSelectedListId(e.target.value)}>
-        <option value="">Select a list</option>
-        {movieLists.map(list => (
-          <option key={list.id} value={list.id}>{list.name}</option>
-        ))}
-      </select>
+    <Box sx={{ mt: 3 }}>
+      <Typography variant="h4" gutterBottom>Movie List Manager</Typography>
+      <FormControl fullWidth margin="normal">
+        <InputLabel>Select a list</InputLabel>
+        <Select value={selectedListId || ''} onChange={(e) => setSelectedListId(e.target.value)}>
+          <MenuItem value=""><em>None</em></MenuItem>
+          {movieLists.map(list => (
+            <MenuItem key={list.id} value={list.id}>{list.name}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       {selectedListId && (
         <>
           <AddMovieForm onAddMovie={handleAddMovie} />
           <MovieList movies={movies} onRemoveMovie={handleRemoveMovie} />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

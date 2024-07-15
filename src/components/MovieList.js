@@ -1,16 +1,19 @@
 import React from 'react';
+import { List, ListSubheader, Typography, Box } from '@mui/material';
 import MovieItem from './MovieItem';
 
 const MovieList = ({ movies, onRemoveMovie }) => {
   return (
-    <div>
-      <h2>Movie List</h2>
-      <ul>
-        {movies.map(movie => (
+    <Box>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Movie List
+      </Typography>
+      <List subheader={<ListSubheader>Movies</ListSubheader>}>
+        {movies.map((movie) => (
           <MovieItem key={movie.id} movie={movie} onRemoveMovie={onRemoveMovie} />
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   );
 };
 

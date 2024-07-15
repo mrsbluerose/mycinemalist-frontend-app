@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { AppBar, Toolbar, Typography, Container, CssBaseline } from '@mui/material';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -9,8 +11,15 @@ import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
 import axios from 'axios';
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+  },
+});
+
 function App() {
-  // Clear localStorage on application start
   useEffect(() => {
     localStorage.removeItem('jwt_token');
   }, []);
@@ -44,19 +53,22 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
         <Header isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
-          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
-          <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+        <Container>
+          <Routes>
+            <Route path="/" element={isAuthenticated ? <HomePage /> : <Navigate to="/login" />} />
+            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+            <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+          </Routes>
+          <Footer />
+        </Container>
+      </Router>
+    </ThemeProvider>
   );
 }
 

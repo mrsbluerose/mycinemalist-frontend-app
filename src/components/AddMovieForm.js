@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TextField, Button, Box, Typography } from '@mui/material';
 
 const AddMovieForm = ({ onAddMovie }) => {
   const [movieTitle, setMovieTitle] = useState('');
@@ -13,13 +14,18 @@ const AddMovieForm = ({ onAddMovie }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Movie Title:</label>
-        <input type="text" value={movieTitle} onChange={(e) => setMovieTitle(e.target.value)} />
-      </div>
-      <button type="submit">Add Movie</button>
-    </form>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Typography variant="h6" gutterBottom>Add a Movie</Typography>
+      <TextField
+        label="Movie Title"
+        variant="outlined"
+        fullWidth
+        value={movieTitle}
+        onChange={(e) => setMovieTitle(e.target.value)}
+        margin="normal"
+      />
+      <Button type="submit" variant="contained" color="primary">Add Movie</Button>
+    </Box>
   );
 };
 
