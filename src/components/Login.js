@@ -14,6 +14,7 @@ const Login = ({ setIsAuthenticated }) => {
     try {
       const response = await axios.post('/auth/login', { username, password });
       localStorage.setItem('jwt_token', response.data.token);
+      localStorage.setItem('username', response.data.username);
       setIsAuthenticated(true); // Update authentication state
       navigate('/'); // Redirect to the homepage after successful login
     } catch (error) {
