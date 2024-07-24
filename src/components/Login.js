@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Container, Box, Typography, Alert } from '@mui/material';
 
 const Login = ({ setIsAuthenticated }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Login = ({ setIsAuthenticated }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/auth/login', { username, password });
+      const response = await axios.post('/auth/login', { email: email, password });
       localStorage.setItem('jwt_token', response.data.token);
       setIsAuthenticated(true); // Update authentication state
       navigate('/'); // Redirect to the homepage after successful login
@@ -27,12 +27,12 @@ const Login = ({ setIsAuthenticated }) => {
         <Typography variant="h4" gutterBottom>Login</Typography>
         {error && <Alert severity="error">{error}</Alert>}
         <TextField
-          label="Username"
+          label="Email"
           variant="outlined"
           fullWidth
           margin="normal"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <TextField
