@@ -13,6 +13,7 @@ const Header = ({ isAuthenticated, handleLogout }) => {
           <>
             <Button color="inherit" component={Link} to="/">Home</Button>
             <Button color="inherit" component={Link} to="/profile">Profile</Button>
+            <Button color="inherit" component={Link} to="/search">Search Movies</Button>
             <Button color="inherit" component={Link} to="/movie-list-manager">Movie List Manager</Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>
