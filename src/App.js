@@ -9,6 +9,7 @@ import UserProfile from './components/UserProfile';
 import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRoute from './components/PrivateRoute';
+import MovieSearchPage from './pages/MovieSearchPage';
 import MovieListManager from './components/MovieListManager';
 import axios from 'axios';
 
@@ -65,6 +66,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
             <Route path="/home" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+            <Route path="/search" element={<PrivateRoute><MovieSearchPage /></PrivateRoute>} />
             <Route path="/movie-list-manager" element={<PrivateRoute><MovieListManager /></PrivateRoute>} />
           </Routes>
           <Footer />
